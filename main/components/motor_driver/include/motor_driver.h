@@ -1,5 +1,7 @@
 #include "driver/gpio.h"
 #include "driver/ledc.h"
+#include "esp_err.h"
+#include "esp_log.h"
 #include <stdio.h>
 
 // Motor pin definitions
@@ -14,10 +16,8 @@
 #define PWM_TIMER LEDC_TIMER_0
 #define PWM_MODE LEDC_LOW_SPEED_MODE
 #define PWM_DUTY_RES LEDC_TIMER_10_BIT // Set duty resolution to 13 bits
-#define PWM_FREQUENCY (4000) // Frequency in Hertz. Set frequency at 4 kHz
+#define PWM_FREQUENCY (100) // Frequency in Hertz. Set frequency at 4 kHz
 // PWM Channel configuration
-ledc_channel_config_t pwma1_config;
-ledc_channel_config_t pwma2_config;
 #define PWMA1 LEDC_CHANNEL_0
 #define PWMA2 LEDC_CHANNEL_1
 // PWM GPIO configuration
@@ -25,4 +25,5 @@ ledc_channel_config_t pwma2_config;
 #define PWMA2_PIN GPIO_NUM_12
 
 void motor_driver_init();
+esp_err_t change_motor_duty(uint8_t duty_percentage, ledc_channel_t channel);
 void test_motor_task();

@@ -1,0 +1,207 @@
+[0;33m--- esp-idf-monitor 1.3.4 on /dev/ttyACM0 115200 ---[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---[0m
+[0;33m0x4004883b: uart_tx_one_char_uart in ROM
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x4037a5ad: spinlock_acquire at /home/pedro/esp/esp-idf/components/esp_hw_support/include/spinlock.h:130
+ (inlined by) xPortEnterCriticalTimeout at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:473
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x403781fc: esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:459
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x4037a5a4: spinlock_acquire at /home/pedro/esp/esp-idf/components/esp_hw_support/include/spinlock.h:130
+ (inlined by) xPortEnterCriticalTimeout at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:473
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x40378202: xt_utils_compare_and_set at /home/pedro/esp/esp-idf/components/xtensa/include/xt_utils.h:215
+ (inlined by) esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:491
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x403781fc: esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:459
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x40378202: xt_utils_compare_and_set at /home/pedro/esp/esp-idf/components/xtensa/include/xt_utils.h:215
+ (inlined by) esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:491
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x40378202: xt_utils_compare_and_set at /home/pedro/esp/esp-idf/components/xtensa/include/xt_utils.h:215
+ (inlined by) esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:491
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x4037820c: xt_utils_compare_and_set at /home/pedro/esp/esp-idf/components/xtensa/include/xt_utils.h:222
+ (inlined by) esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:491
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x403781fc: esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:459
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x40378202: xt_utils_compare_and_set at /home/pedro/esp/esp-idf/components/xtensa/include/xt_utils.h:215
+ (inlined by) esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:491
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x403781fc: esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:459
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x4037a5a4: spinlock_acquire at /home/pedro/esp/esp-idf/components/esp_hw_support/include/spinlock.h:130
+ (inlined by) xPortEnterCriticalTimeout at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:473
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x403781fc: esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:459
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x4037a5b0: spinlock_acquire at /home/pedro/esp/esp-idf/components/esp_hw_support/include/spinlock.h:131
+ (inlined by) xPortEnterCriticalTimeout at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:473
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x40378202: xt_utils_compare_and_set at /home/pedro/esp/esp-idf/components/xtensa/include/xt_utils.h:215
+ (inlined by) esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:491
+[0m
+[0;33m0x4037afb2: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3551
+[0m
+[0;33m0x4037afaf: prvSelectHighestPriorityTaskSMP at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3537 (discriminator 1)
+[0m
+[0;33m0x4037b902: vTaskSwitchContext at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3641
+[0m
+[0;33m0x4037a80c: _frxt_dispatch at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+[0m
+[0;33m0x4037a802: _frxt_int_exit at /home/pedro/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+[0m
+[0;33m0x403781fc: esp_cpu_compare_and_set at /home/pedro/esp/esp-idf/components/esp_hw_support/cpu.c:459
+[0m
+[0m
