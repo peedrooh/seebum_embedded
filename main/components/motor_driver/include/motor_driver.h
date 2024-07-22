@@ -1,29 +1,27 @@
-#include "driver/gpio.h"
 #include "driver/ledc.h"
 #include "esp_err.h"
 #include "esp_log.h"
+#include "freertos/idf_additions.h"
 #include <stdio.h>
 
-// Motor pin definitions
-#define AIN11_PIN GPIO_NUM_21
-#define AIN12_PIN GPIO_NUM_47
-#define AIN21_PIN GPIO_NUM_14
-#define AIN22_PIN GPIO_NUM_13
-// Motor direction
-#define MOTOR_1_CW 1
-#define MOTOR_2_CW 1
-// PWM Timer configuration
+#define AIN1_PIN GPIO_NUM_39
+#define AIN1_PWM LEDC_CHANNEL_0
+#define AIN2_PIN GPIO_NUM_40
+#define AIN2_PWM LEDC_CHANNEL_1
+#define MOTOR_A_CLOCKWISE 1
+
+#define BIN1_PIN GPIO_NUM_37
+#define BIN1_PWM LEDC_CHANNEL_2
+#define BIN2_PIN GPIO_NUM_38
+#define BIN2_PWM LEDC_CHANNEL_3
+#define MOTOR_B_CLOCKWISE 1
+
 #define PWM_TIMER LEDC_TIMER_0
 #define PWM_MODE LEDC_LOW_SPEED_MODE
-#define PWM_DUTY_RES LEDC_TIMER_10_BIT // Set duty resolution to 13 bits
-#define PWM_FREQUENCY (100) // Frequency in Hertz. Set frequency at 4 kHz
-// PWM Channel configuration
-#define PWMA1 LEDC_CHANNEL_0
-#define PWMA2 LEDC_CHANNEL_1
-// PWM GPIO configuration
-#define PWMA1_PIN GPIO_NUM_48
-#define PWMA2_PIN GPIO_NUM_12
+#define PWM_DUTY_RES LEDC_TIMER_10_BIT
+#define PWM_FREQUENCY (4000)
 
-void motor_driver_init();
-esp_err_t change_motor_duty(uint8_t duty_percentage, ledc_channel_t channel);
+esp_err_t motor_driver_init();
+esp_err_t control_motor(bool is_motor_a, uint8_t duty_percentage,
+                        bool is_clockwise);
 void test_motor_task();

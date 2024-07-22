@@ -1,79 +1,111 @@
 #include "motor_driver.h"
-#include "driver/gpio.h"
-#include "driver/ledc.h"
-#include "esp_err.h"
-#include "freertos/idf_additions.h"
-#include "freertos/projdefs.h"
-#include "hal/ledc_types.h"
-#include "soc/clk_tree_defs.h"
-#include <stdint.h>
 
-void motor_driver_init() {
-  // Set motor 1 pins direction and motor ratational direction
-  gpio_set_direction(AIN11_PIN, GPIO_MODE_OUTPUT);
-  gpio_set_direction(AIN12_PIN, GPIO_MODE_OUTPUT);
-  gpio_set_level(AIN11_PIN, MOTOR_1_CW);
-  gpio_set_level(AIN12_PIN, !MOTOR_1_CW);
+esp_err_t motor_driver_init() {
+  // Motor A PWM configuration
+  ledc_channel_config_t ain1_config = {0};
+  ain1_config.speed_mode = PWM_MODE;
+  ain1_config.timer_sel = PWM_TIMER;
+  ain1_config.intr_type = LEDC_INTR_DISABLE;
+  ain1_config.duty = 0;
+  ain1_config.channel = AIN1_PWM;
+  ain1_config.gpio_num = AIN1_PIN;
+  if (ledc_channel_config(&ain1_config) != ESP_OK)
+    return ESP_FAIL;
 
-  // Set motor 2 pins direction and motor ratational direction
-  gpio_set_direction(AIN21_PIN, GPIO_MODE_OUTPUT);
-  gpio_set_direction(AIN22_PIN, GPIO_MODE_OUTPUT);
-  gpio_set_level(AIN21_PIN, MOTOR_2_CW);
-  gpio_set_level(AIN22_PIN, !MOTOR_2_CW);
+  ledc_channel_config_t ain2_config = {0};
+  ain2_config.speed_mode = PWM_MODE;
+  ain2_config.timer_sel = PWM_TIMER;
+  ain2_config.intr_type = LEDC_INTR_DISABLE;
+  ain2_config.duty = 0;
+  ain2_config.channel = AIN2_PWM;
+  ain2_config.gpio_num = AIN2_PIN;
+  if (ledc_channel_config(&ain2_config) != ESP_OK)
+    return ESP_FAIL;
 
-  // PWM configuration
-  ledc_channel_config_t pwma1_configs = {0};
-  pwma1_configs.speed_mode = PWM_MODE;
-  pwma1_configs.channel = PWMA1;
-  pwma1_configs.timer_sel = PWM_TIMER;
-  pwma1_configs.intr_type = LEDC_INTR_DISABLE;
-  pwma1_configs.gpio_num = PWMA1_PIN;
-  pwma1_configs.duty = 0;
-  ledc_channel_config_t pwma2_configs = {0};
-  pwma2_configs.speed_mode = PWM_MODE;
-  pwma2_configs.channel = PWMA2;
-  pwma2_configs.timer_sel = PWM_TIMER;
-  pwma2_configs.intr_type = LEDC_INTR_DISABLE;
-  pwma2_configs.gpio_num = PWMA2_PIN;
-  pwma2_configs.duty = 0;
-  ESP_ERROR_CHECK(ledc_channel_config(&pwma1_configs));
-  ESP_ERROR_CHECK(ledc_channel_config(&pwma2_configs));
+  // Motor B PWM configuration
+  ledc_channel_config_t bin1_config = {0};
+  bin1_config.speed_mode = PWM_MODE;
+  bin1_config.timer_sel = PWM_TIMER;
+  bin1_config.intr_type = LEDC_INTR_DISABLE;
+  bin1_config.duty = 0;
+  bin1_config.channel = BIN1_PWM;
+  bin1_config.gpio_num = BIN1_PIN;
+  if (ledc_channel_config(&bin1_config) != ESP_OK)
+    return ESP_FAIL;
 
-  ledc_timer_config_t pwm_timer_configs = {0};
-  pwm_timer_configs.speed_mode = PWM_MODE;
-  pwm_timer_configs.freq_hz = PWM_FREQUENCY;
-  pwm_timer_configs.duty_resolution = PWM_DUTY_RES;
-  pwm_timer_configs.timer_num = PWM_TIMER;
-  ESP_ERROR_CHECK(ledc_timer_config(&pwm_timer_configs));
+  ledc_channel_config_t bin2_config = {0};
+  bin2_config.speed_mode = PWM_MODE;
+  bin2_config.timer_sel = PWM_TIMER;
+  bin2_config.intr_type = LEDC_INTR_DISABLE;
+  bin2_config.duty = 0;
+  bin2_config.channel = BIN2_PWM;
+  bin2_config.gpio_num = BIN2_PIN;
+  if (ledc_channel_config(&bin2_config) != ESP_OK)
+    return ESP_FAIL;
+
+  // Timer configuration
+  ledc_timer_config_t timer_config = {0};
+  timer_config.speed_mode = PWM_MODE;
+  timer_config.freq_hz = PWM_FREQUENCY;
+  timer_config.duty_resolution = PWM_DUTY_RES;
+  timer_config.timer_num = PWM_TIMER;
+  if (ledc_timer_config(&timer_config) != ESP_OK)
+    return ESP_FAIL;
+
+  // Start all channels off
+  ledc_set_duty(PWM_MODE, AIN1_PWM, 0);
+  ledc_update_duty(PWM_MODE, AIN1_PWM);
+  ledc_set_duty(PWM_MODE, AIN2_PWM, 0);
+  ledc_update_duty(PWM_MODE, AIN2_PWM);
+  ledc_set_duty(PWM_MODE, BIN1_PWM, 0);
+  ledc_update_duty(PWM_MODE, BIN1_PWM);
+  ledc_set_duty(PWM_MODE, BIN2_PWM, 0);
+  ledc_update_duty(PWM_MODE, BIN2_PWM);
+
+  return ESP_OK;
 }
 
-esp_err_t change_motor_duty(uint8_t duty_percentage, ledc_channel_t channel) {
-  static const char *CHANGE_PWM_DUTY = "CHANGE_PWM_DUTY";
-
-  if (duty_percentage > 100) {
-    ESP_LOGE(
-        CHANGE_PWM_DUTY,
-        "The duty cycle must be an integer betwwen 0 and 100 (percentage).");
-    return ESP_FAIL;
-  }
-  if (channel != PWMA1 && channel != PWMA2) {
-    ESP_LOGE(CHANGE_PWM_DUTY, "The channel must be either PWMA1 or PWMA2");
-    return ESP_FAIL;
-  }
+esp_err_t control_motor(bool is_motor_a, uint8_t duty_percentage,
+                        bool is_clockwise) {
   uint32_t duty = (1024) * duty_percentage / 100;
-  ledc_set_duty(PWM_MODE, channel, duty);
-  ledc_update_duty(PWM_MODE, channel);
+
+  if (is_motor_a) {
+    if (is_clockwise) {
+      ledc_set_duty(PWM_MODE, AIN1_PWM, duty);
+      ledc_update_duty(PWM_MODE, AIN1_PWM);
+      ledc_set_duty(PWM_MODE, AIN2_PWM, 0);
+      ledc_update_duty(PWM_MODE, AIN2_PWM);
+    } else {
+      ledc_set_duty(PWM_MODE, AIN1_PWM, 0);
+      ledc_update_duty(PWM_MODE, AIN1_PWM);
+      ledc_set_duty(PWM_MODE, AIN2_PWM, duty);
+      ledc_update_duty(PWM_MODE, AIN2_PWM);
+    }
+  }
+  if (!is_motor_a) {
+    if (is_clockwise) {
+      ledc_set_duty(PWM_MODE, BIN1_PWM, duty);
+      ledc_update_duty(PWM_MODE, BIN1_PWM);
+      ledc_set_duty(PWM_MODE, BIN2_PWM, 0);
+      ledc_update_duty(PWM_MODE, BIN2_PWM);
+    } else {
+      ledc_set_duty(PWM_MODE, BIN1_PWM, 0);
+      ledc_update_duty(PWM_MODE, BIN1_PWM);
+      ledc_set_duty(PWM_MODE, BIN2_PWM, duty);
+      ledc_update_duty(PWM_MODE, BIN2_PWM);
+    }
+  }
 
   return ESP_OK;
 }
 
 void test_motor_task() {
   while (1) {
-    ESP_LOGI("TEST MOTOR", "Duty 25");
-    change_motor_duty(25, PWMA1);
-    vTaskDelay(pdMS_TO_TICKS(3000));
-    ESP_LOGI("TEST MOTOR", "Duty 50");
-    change_motor_duty(50, PWMA1);
-    vTaskDelay(pdMS_TO_TICKS(3000));
+    control_motor(true, 10, false);
+    control_motor(false, 30, false);
+    vTaskDelay(pdMS_TO_TICKS(2000));
+    control_motor(true, 50, true);
+    control_motor(false, 80, false);
+    vTaskDelay(pdMS_TO_TICKS(2000));
   }
 }
