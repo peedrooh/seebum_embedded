@@ -1,3 +1,6 @@
+#ifndef MOTOR_DRIVER_H
+#define MOTOR_DRIVER_H
+
 #include "driver/ledc.h"
 #include "esp_err.h"
 #include "esp_log.h"
@@ -25,3 +28,5 @@ esp_err_t motor_driver_init();
 esp_err_t control_motor(bool is_motor_a, uint8_t duty_percentage,
                         bool is_clockwise);
 void test_motor_task();
+
+#endif

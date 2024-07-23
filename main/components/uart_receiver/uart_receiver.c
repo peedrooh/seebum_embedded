@@ -34,7 +34,8 @@ void rx_task(void *arg) {
       sscanf((char *)data, "%d %d %d %d", &oponent_data.x, &oponent_data.y,
              &oponent_data.w, &oponent_data.h);
 
-      if (xQueueSend(queue_handler, &oponent_data, portMAX_DELAY) != pdTRUE) {
+      if (xQueueSend(uart_queue_handler, &oponent_data, portMAX_DELAY) !=
+          pdTRUE) {
         ESP_LOGE(RX_TASK_TAG, "Failed to send to queue");
         free(data);
       }

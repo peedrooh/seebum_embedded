@@ -1,3 +1,6 @@
+#ifndef UART_RECEIVER_H
+#define UART_RECEIVER_H
+
 #include "driver/uart.h"
 #include "esp_log.h"
 #include <stdint.h>
@@ -24,3 +27,5 @@ static const uart_config_t uart_config = {
 
 void uart_init();
 void rx_task(void *arg);
+
+#endif
