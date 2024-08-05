@@ -38,8 +38,8 @@ void test_ir_queue(void *pvParameters) {
         pdPASS) {
       // parse the receive symbols and print the result
       if (sirc_frame_parser(rx_data.received_symbols, rx_data.num_symbols)) {
-        ESP_LOGI("IR Data", "Address: %d   -   Command: %d", IR_address,
-                 IR_command);
+        ESP_LOGI("IR Data", "Address: %d   -   Command: %d", ir_address,
+                 ir_command);
       }
 
       // start receive again
