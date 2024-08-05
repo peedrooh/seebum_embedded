@@ -101,11 +101,11 @@ esp_err_t control_motor(bool is_motor_a, uint8_t duty_percentage,
 
 void test_motor_task() {
   while (1) {
-    control_motor(true, 10, false);
-    control_motor(false, 30, false);
+    control_motor(true, 100, false);
+    // control_motor(false, 30, false);
     vTaskDelay(pdMS_TO_TICKS(2000));
-    control_motor(true, 50, true);
-    control_motor(false, 80, false);
+    control_motor(true, 80, true);
+    // control_motor(false, 80, false);
     vTaskDelay(pdMS_TO_TICKS(2000));
   }
 }
