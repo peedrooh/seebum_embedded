@@ -25,8 +25,8 @@ extern rmt_channel_handle_t rx_channel;
 extern rmt_receive_config_t receive_config;
 extern rmt_symbol_word_t raw_symbols[64];
 extern rmt_rx_done_event_data_t rx_data;
-extern uint8_t IR_address;
-extern uint8_t IR_command;
+extern uint8_t ir_address;
+extern uint8_t ir_command;
 
 /**
  * @brief Remote Control Transiver (RMT) receiver configuration. This component

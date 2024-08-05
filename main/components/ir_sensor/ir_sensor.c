@@ -5,8 +5,8 @@ rmt_channel_handle_t rx_channel;
 rmt_receive_config_t receive_config;
 rmt_symbol_word_t raw_symbols[64];
 rmt_rx_done_event_data_t rx_data;
-uint8_t IR_address;
-uint8_t IR_command;
+uint8_t ir_address;
+uint8_t ir_command;
 
 esp_err_t ir_init() {
   static const char *TAG = "RMT Receiver Config";
@@ -117,8 +117,8 @@ bool sirc_frame_parser(rmt_symbol_word_t *rmt_sirc_symbols, size_t symbol_num) {
     }
   }
 
-  IR_address = address;
-  IR_command = command;
+  ir_address = address;
+  ir_command = command;
   return true;
 }
 
