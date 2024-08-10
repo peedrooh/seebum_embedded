@@ -10,7 +10,7 @@
 #include "queue_handler.h"
 
 #define IR_RESOLUTION_HZ 1000000 // 1MHz resolution, 1 tick = 1us
-#define IR_RX_GPIO_NUM 37
+#define IR_RX_GPIO_NUM 7
 
 /**
  * @brief SIRC timing spec

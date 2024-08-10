@@ -40,9 +40,9 @@ void rx_task(void *arg) {
         free(data);
       }
     } else if (rxBytes > 16) {
-      ESP_LOGE(RX_TASK_TAG,
-               "UART message must be 16 bytes or smaller. Actual size %d",
-               rxBytes);
+      // ESP_LOGE(RX_TASK_TAG,
+      //          "UART message must be 16 bytes or smaller. Actual size %d",
+      //          rxBytes);
       free(data);
     }
 
