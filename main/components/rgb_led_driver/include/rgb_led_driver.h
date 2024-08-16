@@ -17,11 +17,11 @@
 #define R_PIN GPIO_NUM_48
 #define G_PIN GPIO_NUM_47
 #define B_PIN GPIO_NUM_21
-#define R_CHANNEL LEDC_CHANNEL_0
-#define G_CHANNEL LEDC_CHANNEL_1
-#define B_CHANNEL LEDC_CHANNEL_2
+#define R_CHANNEL LEDC_CHANNEL_4
+#define G_CHANNEL LEDC_CHANNEL_5
+#define B_CHANNEL LEDC_CHANNEL_6
 #define RGB_PWM_RES LEDC_TIMER_8_BIT
-#define RGB_FREQUENCY (100)
+#define RGB_FREQUENCY (4000)
 
 esp_err_t rgb_led_init(void);
 esp_err_t set_rgb_color(unsigned long hexcode);
