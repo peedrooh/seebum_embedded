@@ -34,6 +34,8 @@ extern uint8_t ir_command;
  */
 esp_err_t ir_init();
 
+void ir_restart();
+
 /**
  * @brief Check whether a duration is within expected range
  */

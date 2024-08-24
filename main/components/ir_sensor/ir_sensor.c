@@ -21,6 +21,12 @@ esp_err_t ir_init() {
   rx_channel = NULL;
   ESP_ERROR_CHECK(rmt_new_rx_channel(&rx_channel_cfg, &rx_channel));
 
+  return ESP_OK;
+}
+
+void ir_restart() {
+  static const char *TAG = "RMT Receiver restart";
+
   ESP_LOGI(TAG, "Register RX done callback");
   rmt_rx_event_callbacks_t cbs = {
       .on_recv_done = rmt_rx_done_callback,
@@ -34,8 +40,6 @@ esp_err_t ir_init() {
   ESP_ERROR_CHECK(rmt_enable(rx_channel));
   ESP_ERROR_CHECK(rmt_receive(rx_channel, raw_symbols, sizeof(raw_symbols),
                               &receive_config));
-
-  return ESP_OK;
 }
 
 bool sirc_check_in_range(uint32_t signal_duration, uint32_t spec_duration) {
