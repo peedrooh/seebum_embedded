@@ -1,11 +1,11 @@
+#include "control_modes.h"
 #include "ir_sensor.h"
 #include "line_sensor.h"
 #include "motor_driver.h"
 #include "queue_handler.h"
 #include "rgb_led_driver.h"
 #include "uart_receiver.h"
-#include "control_modes.h"
-
+#include "xtensa/hal.h"
 
 void app_main(void) {
   // uart_init();
@@ -16,7 +16,7 @@ void app_main(void) {
   queues_init();
   ir_init();
   rgb_led_init();
-  // line_sensor_init();
+  line_sensor_init();
 
   xTaskCreatePinnedToCore(main_loop, "Main Loop", 1024 * 3, NULL, 1,
                           &main_task_handle, 0);
@@ -31,9 +31,7 @@ void app_main(void) {
   //                         NULL, 1);
   // xTaskCreatePinnedToCore(task_led_blink, "Blink RGB LED", 1024 * 2, NULL, 1,
   //                         NULL, 0);
-  // while (1) {
-  //   bool is_line_white = get_line_color(true);
-  //   ESP_LOGI("Line Sensor", "Linha: %d", is_line_white);
-  //   vTaskDelay(pdMS_TO_TICKS(2000));
-  // }
+  // xTaskCreatePinnedToCore(test_line_sensor, "Test line Sensor", 1024 * 2,
+  // NULL,
+  //                         1, NULL, 0);
 }

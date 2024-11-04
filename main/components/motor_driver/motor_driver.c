@@ -67,9 +67,13 @@ esp_err_t motor_driver_init() {
 
 esp_err_t control_motor(bool is_motor_a, uint8_t duty_percentage,
                         bool is_clockwise) {
-  uint32_t duty = (1024) * duty_percentage / 100;
+  uint32_t duty = 0;
 
   if (is_motor_a) {
+    duty = (1024) * duty_percentage / 100;
+    if (duty_percentage - MOTOR_A_OFFSET > 0)
+      duty = (1024) * (duty_percentage - MOTOR_A_OFFSET) / 100;
+
     if (is_clockwise) {
       ledc_set_duty(PWM_MODE, AIN1_PWM, duty);
       ledc_update_duty(PWM_MODE, AIN1_PWM);
@@ -83,6 +87,9 @@ esp_err_t control_motor(bool is_motor_a, uint8_t duty_percentage,
     }
   }
   if (!is_motor_a) {
+    duty = (1024) * duty_percentage / 100;
+    if (duty_percentage - MOTOR_B_OFFSET > 0)
+      duty = (1024) * (duty_percentage - MOTOR_A_OFFSET) / 100;
     if (is_clockwise) {
       ledc_set_duty(PWM_MODE, BIN1_PWM, duty);
       ledc_update_duty(PWM_MODE, BIN1_PWM);

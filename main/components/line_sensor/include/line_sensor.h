@@ -15,9 +15,10 @@
 // GPIO5 is equivalent ot ADC 1 Channel 4
 #define LS_RIGHT_PIN ADC1_CHANNEL_4
 #define LS_LEFT_PIN ADC1_CHANNEL_3
-#define WHITE_OFFSET 150
+#define WHITE_OFFSET 300
 
 esp_err_t line_sensor_init();
 bool get_line_color(bool is_right);
+void test_line_sensor(void *pvParameters);
 
 #endif

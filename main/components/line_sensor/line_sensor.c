@@ -56,3 +56,13 @@ bool get_line_color(bool is_right_ls) {
     return true;
   return false;
 }
+
+void test_line_sensor(void *pvParameters) {
+  while (1) {
+    bool sensor_one = get_line_color(true);
+    bool sensor_two = get_line_color(false);
+    ESP_LOGI("Line Sensor", "Sensor Right: %d\nSensor left: %d", sensor_one,
+             sensor_two);
+    vTaskDelay(pdMS_TO_TICKS(2000));
+  }
+}
