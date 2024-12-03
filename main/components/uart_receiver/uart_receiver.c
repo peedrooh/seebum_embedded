@@ -1,5 +1,8 @@
 #include "uart_receiver.h"
+#include "esp_log.h"
 #include "queue_handler.h"
+#include <stdlib.h>
+#include <string.h>
 
 void uart_init() {
   ESP_ERROR_CHECK(
@@ -26,13 +29,14 @@ void rx_task(void *arg) {
         uart_read_bytes(UART_NUM, data, RX_BUF_SIZE, 1000 / portTICK_PERIOD_MS);
 
     // Sends the data to the queue if it is bigger than 0 and smaller than 16
-    if (rxBytes > 0 && rxBytes <= 16) {
+    if (rxBytes > 0) {
       data[rxBytes] = '\0'; // Ensure null-termination for string operations
       ESP_LOGI(RX_TASK_TAG, "Read %d bytes: '%s'", rxBytes, (char *)data);
 
       OponentData oponent_data = {.x = -1, .y = -1, .w = -1, .h = -1};
-      sscanf((char *)data, "%d %d %d %d", &oponent_data.x, &oponent_data.y,
-             &oponent_data.w, &oponent_data.h);
+      int matched = sscanf(
+          (char *)data, "x_center: %d, y_center: %d, w: %d, h: %d",
+          &oponent_data.x, &oponent_data.y, &oponent_data.w, &oponent_data.h);
 
       if (xQueueSend(uart_queue_handler, &oponent_data, portMAX_DELAY) !=
           pdTRUE) {

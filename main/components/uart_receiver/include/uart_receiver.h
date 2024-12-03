@@ -12,8 +12,8 @@
 
 #define BAUD_RATE 115200
 #define UART_NUM UART_NUM_2
-#define TXD_PIN 15
-#define RXD_PIN 7
+#define TXD_PIN 18
+#define RXD_PIN 17
 #define RX_BUF_SIZE 128
 
 static const uart_config_t uart_config = {
