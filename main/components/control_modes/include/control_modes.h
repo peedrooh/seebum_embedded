@@ -9,6 +9,7 @@
 #include "ir_sensor.h"
 #include "line_sensor.h"
 #include "motor_driver.h"
+#include "queue_handler.h"
 #include "remote_control.h"
 #include "rgb_led_driver.h"
 

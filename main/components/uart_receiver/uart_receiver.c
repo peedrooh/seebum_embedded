@@ -4,6 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define TERMINATION_CHAR '\n'
+#define RX_BUF_SIZE 1024
+
+static char message_buffer[RX_BUF_SIZE];
+static int message_pos = 0;
+
 void uart_init() {
   ESP_ERROR_CHECK(
       uart_driver_install(UART_NUM, RX_BUF_SIZE * 2, 0, 0, NULL, 0));
@@ -16,40 +22,52 @@ void rx_task(void *arg) {
   static const char *RX_TASK_TAG = "RX_TASK";
   esp_log_level_set(RX_TASK_TAG, ESP_LOG_INFO);
 
-  while (1) {
-    // Alocating memory to store UART message
-    uint8_t *data = (uint8_t *)malloc(RX_BUF_SIZE + 1);
-    if (data == NULL) {
-      ESP_LOGE(RX_TASK_TAG, "Failed to allocate memory");
-      vTaskDelete(NULL); // Terminate task if memory allocation fails
-    }
+  uint8_t *data = (uint8_t *)malloc(RX_BUF_SIZE);
+  if (data == NULL) {
+    ESP_LOGE(RX_TASK_TAG, "Failed to allocate memory");
+    vTaskDelete(NULL); // Terminate task if memory allocation fails
+  }
 
+  while (1) {
     // Read from UART
     const int rxBytes =
         uart_read_bytes(UART_NUM, data, RX_BUF_SIZE, 1000 / portTICK_PERIOD_MS);
 
-    // Sends the data to the queue if it is bigger than 0 and smaller than 16
     if (rxBytes > 0) {
-      data[rxBytes] = '\0'; // Ensure null-termination for string operations
-      ESP_LOGI(RX_TASK_TAG, "Read %d bytes: '%s'", rxBytes, (char *)data);
+      for (int i = 0; i < rxBytes; i++) {
+        if (data[i] == TERMINATION_CHAR) {
+          // Null-terminate the message and process it
+          message_buffer[message_pos] = '\0';
+          // ESP_LOGI(RX_TASK_TAG, "Complete message: '%s'", message_buffer);
 
-      OponentData oponent_data = {.x = -1, .y = -1, .w = -1, .h = -1};
-      int matched = sscanf(
-          (char *)data, "x_center: %d, y_center: %d, w: %d, h: %d",
-          &oponent_data.x, &oponent_data.y, &oponent_data.w, &oponent_data.h);
+          // Parse the message
+          OponentData oponent_data = {.x = -1, .y = -1, .w = -1, .h = -1};
+          int matched =
+              sscanf(message_buffer, "x_center: %d, y_center: %d, w: %d, h: %d",
+                     &oponent_data.x, &oponent_data.y, &oponent_data.w,
+                     &oponent_data.h);
 
-      if (xQueueSend(uart_queue_handler, &oponent_data, portMAX_DELAY) !=
-          pdTRUE) {
-        ESP_LOGE(RX_TASK_TAG, "Failed to send to queue");
-        free(data);
+          if (xQueueSend(uart_queue_handler, &oponent_data, portMAX_DELAY) !=
+              pdTRUE) {
+            ESP_LOGE(RX_TASK_TAG, "Failed to send to queue");
+          }
+
+          // Reset the buffer for the next message
+          message_pos = 0;
+        } else {
+          // Add character to the message buffer
+          if (message_pos < RX_BUF_SIZE - 1) {
+            message_buffer[message_pos++] = data[i];
+          } else {
+            ESP_LOGE(RX_TASK_TAG, "Message buffer overflow");
+            message_pos = 0; // Reset buffer in case of overflow
+          }
+        }
       }
-    } else if (rxBytes > 16) {
-      // ESP_LOGE(RX_TASK_TAG,
-      //          "UART message must be 16 bytes or smaller. Actual size %d",
-      //          rxBytes);
-      free(data);
     }
 
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(100)); // Small delay to avoid busy loop
   }
+
+  free(data); // Free allocated memory
 }
