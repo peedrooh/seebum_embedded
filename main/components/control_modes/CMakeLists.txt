@@ -1,6 +1,6 @@
 set(SRCS "control_modes.c")
 
-list(APPEND SRCS "modes/remote_control.c")
+list(APPEND SRCS "modes/remote_control.c" "modes/line_tracker.c")
 
 set(INCLUDES "include" "modes")
 

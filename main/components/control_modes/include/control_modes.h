@@ -8,6 +8,7 @@
 #include "freertos/projdefs.h"
 #include "ir_sensor.h"
 #include "line_sensor.h"
+#include "line_tracker.h"
 #include "motor_driver.h"
 #include "queue_handler.h"
 #include "remote_control.h"
@@ -21,6 +22,7 @@
 extern TaskHandle_t remote_task_handle;
 extern TaskHandle_t main_task_handle;
 extern TaskHandle_t line_tracker_handle;
+extern TaskHandle_t oponent_detection_handle;
 
 void line_tracker_mode(void *pvParameters);
 void main_loop(void *pvParameter);
