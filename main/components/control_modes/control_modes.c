@@ -23,6 +23,19 @@ void oponent_detection(void *pvParameters) {
   OponentData received_data;
 
   while (1) {
+    // if (xQueueReceive(uart_queue_handler, &received_data, portMAX_DELAY) !=
+    //     pdTRUE) {
+    //   ESP_LOGI(OPONENT_DETECTION_TASK, "No UART message.");
+    //   continue;
+    // } else {
+    //   ESP_LOGI(
+    //       "MAIN LOOP UART",
+    //       "\n ----- Oponent Position and Size ----- \n  x:  %d\n  y:  %d\n  "
+    //       "w:  %d\n  h:  %d\n",
+    //       received_data.x, received_data.y, received_data.w,
+    //       received_data.h);
+    // }
+
     // If receive go back command from remote control goes back to main loop
     if (xQueueReceive(ir_queue_handler, &rx_data, pdMS_TO_TICKS(200)) ==
         pdPASS) {
@@ -42,12 +55,15 @@ void oponent_detection(void *pvParameters) {
       oponent_detection_handle = NULL;
       vTaskDelete(oponent_detection_handle);
     }
-    if (ir_command != 101 || ir_address != 1)
+    if (ir_command != 101 || ir_address != 1) {
+      ir_command = 0;
       continue;
+    }
 
     vTaskDelay(pdMS_TO_TICKS(4500));
 
     while (1) {
+      ESP_LOGI(OPONENT_DETECTION_TASK, "Fight");
       if (xQueueReceive(ir_queue_handler, &rx_data, pdMS_TO_TICKS(200)) ==
           pdPASS) {
         if (sirc_frame_parser(rx_data.received_symbols, rx_data.num_symbols)) {
@@ -66,6 +82,7 @@ void oponent_detection(void *pvParameters) {
         oponent_detection_handle = NULL;
         vTaskDelete(oponent_detection_handle);
       }
+      ir_command = 0;
       if (xQueueReceive(uart_queue_handler, &received_data, portMAX_DELAY) ==
           pdTRUE) {
         ESP_LOGI(
@@ -73,17 +90,22 @@ void oponent_detection(void *pvParameters) {
             "\n ----- Oponent Position and Size ----- \n  x:  %d\n  y:  %d\n  "
             "w:  %d\n  h:  %d\n",
             received_data.x, received_data.y, received_data.w, received_data.h);
+
         if (received_data.x < 200) {
-          control_motor(true, 100, true);
-          control_motor(false, 50, true);
+          control_motor(true, 80, false);
+          control_motor(false, 30, false);
         } else if (received_data.x > 400) {
-          control_motor(false, 100, true);
-          control_motor(true, 50, true);
+          control_motor(false, 80, false);
+          control_motor(true, 30, false);
         } else {
-          control_motor(true, 100, true);
-          control_motor(false, 100, true);
+          control_motor(true, 100, false);
+          control_motor(false, 100, false);
         }
-        free(&received_data); // Free the memory after processing
+        // free(&received_data); // Free the memory after processing
+        received_data.x = 0;
+        received_data.y = 0;
+        received_data.h = 0;
+        received_data.w = 0;
       }
     }
   }
