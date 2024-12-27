@@ -1,6 +1,7 @@
 #include "control_modes.h"
 #include "driver/rmt_common.h"
 #include "esp_log.h"
+#include "esp_system.h"
 #include "freertos/idf_additions.h"
 #include "freertos/projdefs.h"
 #include "ir_sensor.h"
@@ -63,7 +64,6 @@ void oponent_detection(void *pvParameters) {
     vTaskDelay(pdMS_TO_TICKS(4500));
 
     while (1) {
-      ESP_LOGI(OPONENT_DETECTION_TASK, "Fight");
       if (xQueueReceive(ir_queue_handler, &rx_data, pdMS_TO_TICKS(200)) ==
           pdPASS) {
         if (sirc_frame_parser(rx_data.received_symbols, rx_data.num_symbols)) {
@@ -83,8 +83,8 @@ void oponent_detection(void *pvParameters) {
         vTaskDelete(oponent_detection_handle);
       }
       ir_command = 0;
-      if (xQueueReceive(uart_queue_handler, &received_data, portMAX_DELAY) ==
-          pdTRUE) {
+      if (xQueueReceive(uart_queue_handler, &received_data,
+                        pdMS_TO_TICKS(300)) == pdTRUE) {
         ESP_LOGI(
             "MAIN LOOP UART",
             "\n ----- Oponent Position and Size ----- \n  x:  %d\n  y:  %d\n  "
@@ -161,6 +161,10 @@ void main_loop(void *pvParameters) {
                               1024 * 3, NULL, 1, &oponent_detection_handle, 0);
       main_task_handle = NULL;
       vTaskDelete(main_task_handle);
+    }
+
+    if (ir_command == 9 && ir_address == 1) {
+      esp_restart();
     }
 
     ESP_LOGI("Main Loop", "Address: %d   -   Command: %d", ir_address,
