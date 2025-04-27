@@ -24,18 +24,6 @@ void oponent_detection(void *pvParameters) {
   OponentData received_data;
 
   while (1) {
-    // if (xQueueReceive(uart_queue_handler, &received_data, portMAX_DELAY) !=
-    //     pdTRUE) {
-    //   ESP_LOGI(OPONENT_DETECTION_TASK, "No UART message.");
-    //   continue;
-    // } else {
-    //   ESP_LOGI(
-    //       "MAIN LOOP UART",
-    //       "\n ----- Oponent Position and Size ----- \n  x:  %d\n  y:  %d\n  "
-    //       "w:  %d\n  h:  %d\n",
-    //       received_data.x, received_data.y, received_data.w,
-    //       received_data.h);
-    // }
 
     // If receive go back command from remote control goes back to main loop
     if (xQueueReceive(ir_queue_handler, &rx_data, pdMS_TO_TICKS(200)) ==
@@ -64,6 +52,7 @@ void oponent_detection(void *pvParameters) {
     vTaskDelay(pdMS_TO_TICKS(4500));
 
     while (1) {
+      // CHECK IR SIGNAL
       if (xQueueReceive(ir_queue_handler, &rx_data, pdMS_TO_TICKS(200)) ==
           pdPASS) {
         if (sirc_frame_parser(rx_data.received_symbols, rx_data.num_symbols)) {
@@ -73,6 +62,8 @@ void oponent_detection(void *pvParameters) {
         ESP_ERROR_CHECK(rmt_receive(rx_channel, raw_symbols,
                                     sizeof(raw_symbols), &receive_config));
       }
+
+      // RETURN TO MAIN LOOP
       if (ir_command == 35 && ir_address == 23 && main_task_handle == NULL) {
         control_motor(true, 0, true);
         control_motor(false, 0, true);
@@ -83,18 +74,20 @@ void oponent_detection(void *pvParameters) {
         vTaskDelete(oponent_detection_handle);
       }
       ir_command = 0;
-      if (xQueueReceive(uart_queue_handler, &received_data,
-                        pdMS_TO_TICKS(300)) == pdTRUE) {
-        ESP_LOGI(
-            "MAIN LOOP UART",
-            "\n ----- Oponent Position and Size ----- \n  x:  %d\n  y:  %d\n  "
-            "w:  %d\n  h:  %d\n",
-            received_data.x, received_data.y, received_data.w, received_data.h);
 
-        if (received_data.x < 200) {
+      // CONTROL LOOP
+      if (xQueueReceive(uart_queue_handler, &received_data, portMAX_DELAY) ==
+          pdTRUE) {
+        // ESP_LOGI(
+        //     "MAIN LOOP UART",
+        //     "\n ----- Oponent Position and Size ----- \n  x:  %d\n  y:  %d\n
+        //     " "w:  %d\n  h:  %d\n", received_data.x, received_data.y,
+        //     received_data.w, received_data.h);
+
+        if (received_data.x < 100) {
           control_motor(true, 80, false);
           control_motor(false, 30, false);
-        } else if (received_data.x > 400) {
+        } else if (received_data.x > 200) {
           control_motor(false, 80, false);
           control_motor(true, 30, false);
         } else {
